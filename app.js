@@ -45,6 +45,24 @@ app.use(
 // Static files for uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Welcome to Bug Tracker API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      projects: '/api/projects',
+      tickets: '/api/tickets',
+      comments: '/api/comments'
+    },
+    documentation: 'This is a REST API for the Bug Tracker application. Use the endpoints above to interact with the API.',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Mount routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
